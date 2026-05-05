@@ -1,0 +1,44 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum TaskStatus {
+  CREATED
+  FUNDED
+  ASSIGNED
+  SUBMITTED
+  COMPLETED
+  CANCELLED
+}
+
+model TaskMetadata {
+  id              String   @id @default(uuid())
+  title           String
+  description     String
+  metadataUri     String
+  creatorAddress  String
+  workerAddress   String?
+  tokenAddress    String
+  bountyAmount    String
+  deadline        DateTime
+  status          TaskStatus @default(CREATED)
+  chainId         Int
+  contractAddress String
+  onchainTaskId   String
+  transactionHash String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([chainId, contractAddress, onchainTaskId])
+  @@index([creatorAddress])
+  @@index([workerAddress])
+  @@index([status])
+  @@index([chainId])
+  @@index([contractAddress])
+  @@index([onchainTaskId])
+}
