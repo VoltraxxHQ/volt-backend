@@ -1,8 +1,10 @@
 import { z } from 'zod';
 import { TaskStatus } from '@prisma/client';
 
-export const addressSchema = z.string().regex(/^0x[a-fA-F0-9]{40}$/, 'Invalid Ethereum address');
-export const txHashSchema = z.string().regex(/^0x[a-fA-F0-9]{64}$/, 'Invalid transaction hash');
+// Stellar addresses (Public Keys G... or Contract IDs C...)
+export const addressSchema = z.string().regex(/^[GC][A-Z2-7]{55}$/, 'Invalid Stellar address');
+// Stellar transaction hashes are 64 character hex strings
+export const txHashSchema = z.string().regex(/^[a-fA-F0-9]{64}$/, 'Invalid transaction hash');
 
 export const createTaskSchema = z.object({
   title: z.string().min(1).max(255),
@@ -12,7 +14,7 @@ export const createTaskSchema = z.object({
   tokenAddress: addressSchema,
   bountyAmount: z.string().regex(/^\d+$/, 'Amount must be a positive integer string'),
   deadline: z.string().datetime().refine((d) => new Date(d) > new Date(), 'Deadline must be in the future'),
-  chainId: z.number().int().positive(),
+  chainId: z.string().min(1), // Using string for Stellar network identifier (passphrase)
   contractAddress: addressSchema,
   onchainTaskId: z.string().min(1),
   transactionHash: txHashSchema,
@@ -27,7 +29,7 @@ export const taskParamsSchema = z.object({
 });
 
 export const onchainTaskParamsSchema = z.object({
-  chainId: z.string().transform(Number),
+  chainId: z.string().min(1),
   contractAddress: addressSchema,
   taskId: z.string().min(1),
 });
@@ -38,5 +40,5 @@ export const listTasksQuerySchema = z.object({
   status: z.nativeEnum(TaskStatus).optional(),
   creator: addressSchema.optional(),
   worker: addressSchema.optional(),
-  chainId: z.string().optional().transform((v) => (v ? Number(v) : undefined)),
+  chainId: z.string().optional(),
 });

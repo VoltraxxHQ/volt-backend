@@ -27,7 +27,7 @@ model TaskMetadata {
   bountyAmount    String
   deadline        DateTime
   status          TaskStatus @default(CREATED)
-  chainId         Int
+  chainId         String   // Changed to String for Stellar network passphrases
   contractAddress String
   onchainTaskId   String
   transactionHash String

@@ -1,20 +1,20 @@
-# Volt Backend ⚡
+# Volt Backend ⚡ (Stellar)
 
-Backend service for task metadata, indexing support, and API access for the Volt protocol.
+Backend service for task metadata, indexing support, and API access for the Volt protocol on **Stellar**.
 
 ## 🚀 Overview
 
-The Volt Backend serves as the off-chain metadata layer for the Volt protocol. While smart contracts handle the financial escrow and settlement, this service provides:
+The Volt Backend serves as the off-chain metadata layer for the Volt protocol. While **Soroban** smart contracts handle the financial escrow and settlement, this service provides:
 - Rich task metadata storage (titles, descriptions, media).
 - Task discovery and advanced filtering.
-- On-chain reference indexing.
+- On-chain reference indexing for Stellar assets.
 - Developer API access.
 
 ### MVP Scope
 - **Metadata Management**: CRUD operations for off-chain task details.
-- **On-chain Linking**: Mapping backend records to chain IDs, contract addresses, and task IDs.
+- **On-chain Linking**: Mapping backend records to Stellar network passphrases, contract IDs, and task IDs.
 - **Discovery**: Filterable list endpoints for tasks by status, creator, or worker.
-- **Validation**: Strict schema enforcement using Zod.
+- **Validation**: Strict schema enforcement for Stellar addresses and transaction hashes using Zod.
 
 ## 🏗 Architecture
 
