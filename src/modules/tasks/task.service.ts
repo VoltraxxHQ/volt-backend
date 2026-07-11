@@ -58,7 +58,7 @@ export class TaskService {
    * @returns The found task
    * @throws ApiError if not found
    */
-  async getTaskByOnchainRef(chainId: number, contractAddress: string, taskId: string) {
+  async getTaskByOnchainRef(chainId: string, contractAddress: string, taskId: string) {
     // Search for the task using unique on-chain identifiers
     const task = await taskRepository.findByOnchainRef(chainId, contractAddress, taskId);
     

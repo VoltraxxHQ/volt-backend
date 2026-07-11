@@ -36,7 +36,7 @@ export class TaskRepository {
    * @param onchainTaskId The task ID within the contract
    * @returns The task record or null
    */
-  async findByOnchainRef(chainId: number, contractAddress: string, onchainTaskId: string) {
+  async findByOnchainRef(chainId: string, contractAddress: string, onchainTaskId: string) {
     // Query using the composite unique key
     return prisma.taskMetadata.findUnique({
       where: {

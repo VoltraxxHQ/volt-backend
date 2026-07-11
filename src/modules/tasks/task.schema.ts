@@ -86,9 +86,9 @@ export const listTasksQuerySchema = z.object({
   // Filter by current status
   status: z.nativeEnum(TaskStatus).optional(),
   // Filter by creator address
-  creator: addressSchema.optional(),
+  creatorAddress: addressSchema.optional(),
   // Filter by worker address
-  worker: addressSchema.optional(),
+  workerAddress: addressSchema.optional(),
   // Filter by network
   chainId: z.string().optional(),
 });
