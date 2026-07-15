@@ -28,20 +28,39 @@ The off-chain metadata, query, and indexing API service for the Volt task escrow
 
 ### Prerequisites
 
-- Node.js (v20+)
-- Docker & Docker Compose
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/) (v20+)
+- [Docker & Docker Compose](https://www.docker.com/)
 
-### 1. Environment Setup
+### 1. Clone the Repository & Install Dependencies
 
-Copy the example environment configuration file and modify the database credentials and application settings as needed:
+First, clone the repository to your local machine and install the required npm packages:
+
+```bash
+git clone https://github.com/volt-protocol/volt-backend.git
+cd volt-backend
+npm install
+```
+
+### 2. Environment Setup
+
+Copy the example environment configuration file:
 
 ```bash
 cp .env.example .env
 ```
 
-### 2. Run Database & Application Locally
+The `.env` file contains several configuration options. You can use the defaults for local development:
+- `NODE_ENV`: The environment type (e.g., `development`, `production`).
+- `PORT`: The port the server will run on (default: `3000`).
+- `DATABASE_URL`: Connection string for PostgreSQL (e.g., `postgresql://volt:password@localhost:5432/volt_db?schema=public`).
+- `LOG_LEVEL`: Logging verbosity (`debug`, `info`, `warn`, `error`).
+- `CORS_ORIGIN`: Allowed origins for CORS (`*` for all).
+- `API_VERSION`: API version prefix (e.g., `v1`).
 
-Start the PostgreSQL container, generate the Prisma client, apply database migrations, and launch the Fastify server:
+### 3. Run Database & Application Locally
+
+Start the PostgreSQL database container, generate the Prisma client, apply database migrations, and launch the Fastify development server:
 
 ```bash
 # Start PostgreSQL container in the background
@@ -57,7 +76,9 @@ npm run db:migrate
 npm run dev
 ```
 
-### 3. Build & Production Start
+The API should now be running at `http://localhost:3000/`.
+
+### 4. Build & Production Start
 
 To build and run the compiled Javascript bundle:
 
@@ -68,6 +89,12 @@ npm run build
 # Start the application in production mode
 npm run start
 ```
+
+### Troubleshooting Tips
+
+- **Database Connection Refused**: Ensure Docker is running and the PostgreSQL container is up (`docker ps`). If the port 5432 is already in use by a local PostgreSQL installation, you may need to stop it or change the port in `docker-compose.yml` and `.env`.
+- **Prisma Client Not Found**: If you see errors about missing Prisma client, ensure you have run `npm run db:generate`.
+- **Port 3000 in Use**: If the server fails to start because the port is in use, either stop the conflicting service or change the `PORT` variable in your `.env` file.
 
 ---
 
